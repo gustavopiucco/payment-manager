@@ -6,7 +6,6 @@ const options = {};
 
 // Type the global variable to avoid TypeScript errors
 declare global {
-  // eslint-disable-next-line no-var
   var _mongoClient: MongoClient | undefined;
 }
 
