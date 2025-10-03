@@ -3,15 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-
-// TypeScript type for Product, helps to keep data consistent
-type Product = {
-  id?: string;
-  _id?: string;
-  name: string;
-  price: number;
-  image: string;
-};
+import { Product } from "./types/product";
 
 export default function HomePage() {
   // State that keeps the products list
@@ -25,9 +17,6 @@ export default function HomePage() {
 
   // useEffect runs after the page loads, only once
   useEffect(() => {
-    // flag to avoid updating state after unmount
-    let mounted = true;
-
     // async function to load products from API
     async function load() {
       try {
@@ -41,26 +30,21 @@ export default function HomePage() {
         const data = await res.json();
 
         // update state only if still mounted
-        if (mounted) setProducts(data);
+        setProducts(data);
       } catch (error) {
         // log the error for debug
         console.error('Failed to load products', error);
 
         // show error message on screen
-        if (mounted) setError(error instanceof Error ? error.message : String(error));
+        setError(error instanceof Error ? error.message : String(error));
       } finally {
         // loading finished (error or success)
-        if (mounted) setLoading(false);
+        setLoading(false);
       }
     }
 
     // run the loader when component starts
     load();
-
-    // cleanup: mark as unmounted when component is destroyed
-    return () => {
-      mounted = false;
-    };
   }, []);
 
   return (
@@ -82,7 +66,7 @@ export default function HomePage() {
           {products.map((product) => (
             // Each product card
             <div
-              key={product.id ?? product._id}
+              key={product.id}
               className="bg-white rounded-2xl shadow p-4 flex flex-col items-center hover:shadow-lg transition"
             >
               {/* Product image */}
@@ -106,7 +90,7 @@ export default function HomePage() {
 
               {/* Link to checkout with product id */}
               <Link
-                href={`/checkout?id=${product.id ?? product._id}`}
+                href={`/checkout?id=${product.id}`}
                 className="mt-4 inline-block px-4 py-2 bg-blue-600 text-white rounded-xl hover:bg-blue-700 transition"
               >
                 Buy
