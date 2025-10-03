@@ -1,7 +1,7 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import client from "../../../../../lib/mongodb";
 
-export async function GET(req: Request, { params }: { params: Promise<{ id: number }> }) {
+export async function GET(req: NextRequest, { params }: { params: Promise<{ id: number }> }) {
   try {
     const { id } = await params;
     const db = await client.connect();
