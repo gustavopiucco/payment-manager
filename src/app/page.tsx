@@ -2,7 +2,6 @@
 
 import Image from "next/image";
 
-
 type Product = {
   id: number;
   name: string;
@@ -74,13 +73,17 @@ export default function HomePage() {
             key={product.id}
             className="bg-white rounded-2xl shadow p-4 flex flex-col items-center hover:shadow-lg transition"
           >
-            <div className="w-full h-48 flex items-center justify-center rounded-md overflow-hidden">
-              <img
-                src={product.image}
-                alt={product.name}
-                className="max-w-full max-h-full object-contain"
-              />
-            </div>
+                <div className="w-full h-48 relative rounded-md overflow-hidden">
+                  <Image
+                    src={product.image}
+                    alt={product.name}
+                    fill
+                    sizes="(max-width: 768px) 100vw, 300px"
+                    style={{ objectFit: "contain" }}
+                    className="object-contain"
+                    unoptimized
+                  />
+                </div>
             <h2 className="mt-4 text-lg font-semibold text-gray-800">{product.name}</h2>
             <p className="text-gray-600">€ {product.price.toFixed(2)}</p>
             <button className="mt-4 px-4 py-2 bg-blue-600 text-white rounded-xl hover:bg-blue-700 transition">
