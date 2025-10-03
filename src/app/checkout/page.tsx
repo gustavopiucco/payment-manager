@@ -1,15 +1,20 @@
 "use client";
 
+import React, { Suspense } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
-import products from "../../../lib/products";
+import products, { Product } from "../../../lib/products";
 import Image from "next/image";
 
-export default function CheckoutPage() {
+// this component uses useSearchParams and useRouter, so it needs to be wrapped in <Suspense>
+function CheckoutContent() {
   const params = useSearchParams();
   const router = useRouter();
-  const id = params.get("id");
-  const product = products.find((p) => String(p.id) === id);
 
+  // grab product id from query string (?id=1 for example)
+  const id = params.get("id");
+  const product = products.find((p: Product) => String(p.id) === id);
+
+  // if product not found, show simple error page
   if (!product) {
     return (
       <main className="min-h-screen bg-gray-100 p-8">
@@ -28,10 +33,13 @@ export default function CheckoutPage() {
       <div className="max-w-2xl mx-auto bg-white rounded-2xl p-6 shadow">
         <h1 className="text-2xl font-bold mb-4 text-gray-900">Checkout</h1>
         <div className="flex gap-4 items-center">
+          {/* product image */}
           <div className="w-32 h-32 relative bg-gray-50 rounded-md overflow-hidden">
-            <Image src={product.image}
+            <Image
+              src={product.image}
               alt={product.name}
-              fill style={{ objectFit: "contain" }}
+              fill
+              style={{ objectFit: "contain" }}
               unoptimized
             />
           </div>
@@ -51,5 +59,34 @@ export default function CheckoutPage() {
         </div>
       </div>
     </main>
+  );
+}
+
+// main page component
+export default function CheckoutPage() {
+  return (
+    <Suspense
+      fallback={
+        // fallback UI while waiting for searchParams to be ready
+        <main className="min-h-screen bg-gray-100 p-8">
+          <div className="max-w-2xl mx-auto bg-white rounded-2xl p-6 shadow animate-pulse">
+            <div className="h-6 w-40 bg-gray-200 rounded mb-4" />
+            <div className="flex gap-4 items-center">
+              <div className="w-32 h-32 bg-gray-200 rounded-md" />
+              <div className="space-y-2">
+                <div className="h-4 w-56 bg-gray-200 rounded" />
+                <div className="h-4 w-24 bg-gray-200 rounded" />
+              </div>
+            </div>
+            <div className="mt-6 flex justify-end">
+              <div className="h-10 w-44 bg-gray-200 rounded-xl" />
+            </div>
+          </div>
+        </main>
+      }
+    >
+      {/* real content shows once useSearchParams is resolved */}
+      <CheckoutContent />
+    </Suspense>
   );
 }
