@@ -65,26 +65,7 @@ function CheckoutContent() {
 // main page component
 export default function CheckoutPage() {
   return (
-    <Suspense
-      fallback={
-        // fallback UI while waiting for searchParams to be ready
-        <main className="min-h-screen bg-gray-100 p-8">
-          <div className="max-w-2xl mx-auto bg-white rounded-2xl p-6 shadow animate-pulse">
-            <div className="h-6 w-40 bg-gray-200 rounded mb-4" />
-            <div className="flex gap-4 items-center">
-              <div className="w-32 h-32 bg-gray-200 rounded-md" />
-              <div className="space-y-2">
-                <div className="h-4 w-56 bg-gray-200 rounded" />
-                <div className="h-4 w-24 bg-gray-200 rounded" />
-              </div>
-            </div>
-            <div className="mt-6 flex justify-end">
-              <div className="h-10 w-44 bg-gray-200 rounded-xl" />
-            </div>
-          </div>
-        </main>
-      }
-    >
+    <Suspense fallback={null}>
       {/* real content shows once useSearchParams is resolved */}
       <CheckoutContent />
     </Suspense>
