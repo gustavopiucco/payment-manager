@@ -24,13 +24,13 @@ function CheckoutContent() {
 
   // Effect: fetch the product whenever the `id` changes
   useEffect(() => {
-    // If there is no id, we don't attempt to fetch
-    if (!id) return;
-
     async function load() {
       setLoading(true);
       setError(null);
       try {
+        // If there is no id, we don't attempt to fetch
+        if (!id) throw new Error("No Product ID specified");
+
         const res = await fetch(`/api/products/${id}`);
         if (!res.ok) {
           // Map 404 to a friendly message
@@ -54,24 +54,15 @@ function CheckoutContent() {
     load();
   }, [id]);
 
-  // Handler for confirm button. In a real app this would call a create-order
-  // endpoint; here we show an alert and navigate home for simplicity.
   function handleConfirm() {
     if (!product) return;
     alert(`Order placed for ${product.name} id ${product.id} — €${product.price.toFixed(2)}`);
-    router.push("/");
+    //router.push("/");
   }
 
   return (
     <main className="min-h-screen bg-gray-100 p-8">
       <div className="max-w-2xl mx-auto bg-white rounded-2xl p-6 shadow">
-        {/*
-          Rendering branches (clear and commented):
-          - loading: show a centered loading message
-          - error: show the error and a back button
-          - product: show product details and the confirm button
-          - otherwise: render nothing (no product selected)
-        */}
         {loading ? (
           <div className="text-center py-12 text-gray-900">Loading product…</div>
         ) : error ? (
@@ -88,12 +79,10 @@ function CheckoutContent() {
           </>
         ) : product ? (
           <>
-            {/* Page header */}
             <h1 className="text-2xl font-bold mb-4 text-gray-900">Checkout</h1>
 
-            {/* Product summary: image, name and price */}
             <div className="flex gap-4 items-center">
-              <div className="w-32 h-32 relative bg-gray-50 rounded-md overflow-hidden">
+              <div className="w-32 h-32 relative bg-white rounded-md overflow-hidden">
                 <Image
                   src={product.image}
                   alt={product.name}
@@ -108,7 +97,6 @@ function CheckoutContent() {
               </div>
             </div>
 
-            {/* Confirm action */}
             <div className="mt-6 flex justify-end">
               <button
                 onClick={handleConfirm}
