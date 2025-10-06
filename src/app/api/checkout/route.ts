@@ -3,7 +3,7 @@ import client from "../../../../lib/mongodb";
 
 export async function POST() {
   try {
-    //const db = await client.connect();
+    const db = await client.connect();
     //
 
     return NextResponse.json({});

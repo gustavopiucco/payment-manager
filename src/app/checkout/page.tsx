@@ -55,15 +55,33 @@ function CheckoutContent() {
     load();
   }, [id]);
 
-  function handleConfirm() {
+  async function handleConfirm() {
     if (!product) return;
 
     setLoading(true);
     setError(null);
 
     try {
-      alert(`Order placed for ${product.name} id ${product.id} — €${product.price.toFixed(2)}`);
-      //router.push("/");
+      const res = await fetch("/api/stripe", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ id: product.id }),
+      });
+
+      if (!res.ok) {
+        throw new Error("Failed to create order");
+      }
+
+      const data = await res.json();
+
+      if (data.url) {
+        // Redirect to Stripe Checkout (window.location.href for external URL, because router.push only works in the the React tree)
+        window.location.href = data.url;
+      } else {
+        throw new Error("Invalid response from server");
+      }
     }
     catch (err) {
       if (err instanceof Error) {
@@ -78,7 +96,7 @@ function CheckoutContent() {
     <main className="min-h-screen bg-gray-100 p-8">
       <div className="max-w-2xl mx-auto bg-white rounded-2xl p-6 shadow">
         {loading ? (
-          <div className="text-center py-12 text-gray-900">Loading product…</div>
+          <div className="text-center py-12 text-gray-900">Loading</div>
         ) : error ? (
           <>
             <h1 className="text-center text-2xl font-bold text-gray-900">{error}</h1>
