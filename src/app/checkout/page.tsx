@@ -27,6 +27,7 @@ function CheckoutContent() {
     async function load() {
       setLoading(true);
       setError(null);
+
       try {
         // If there is no id, we don't attempt to fetch
         if (!id) throw new Error("No Product ID specified");
@@ -56,8 +57,21 @@ function CheckoutContent() {
 
   function handleConfirm() {
     if (!product) return;
-    alert(`Order placed for ${product.name} id ${product.id} — €${product.price.toFixed(2)}`);
-    //router.push("/");
+
+    setLoading(true);
+    setError(null);
+
+    try {
+      alert(`Order placed for ${product.name} id ${product.id} — €${product.price.toFixed(2)}`);
+      //router.push("/");
+    }
+    catch (err) {
+      if (err instanceof Error) {
+        setError(err.message);
+      } else {
+        setError("Failed to create order");
+      }
+    }
   }
 
   return (
