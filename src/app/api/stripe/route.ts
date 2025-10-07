@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import Stripe from "stripe";
+import client from "../../../../lib/mongodb";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, { apiVersion: "2025-09-30.clover" });
 
@@ -7,11 +8,15 @@ export async function POST(req: NextRequest) {
   try {
     const { id } = await req.json();
 
-    // TODO: Get product data from db
-    const name = "Test Product";
-    const image = "https://placehold.co/600x400/png";
-    const price = 100;
-    const unit_amount = Math.round(price * 100); // in cents
+    const db = await client.connect();
+    const product = await db
+      .db("payment-manager")
+      .collection("products")
+      .findOne({ id: id });
+
+    if (!product) {
+      return NextResponse.json({ error: "Product not found" }, { status: 404 });
+    }
 
     const paymentLink = await stripe.paymentLinks.create({
       line_items: [
@@ -19,10 +24,10 @@ export async function POST(req: NextRequest) {
           price_data: {
             currency: "eur",
             product_data: {
-              name,
-              images: image ? [image] : undefined,
+              name: product.name,
+              images: product.image ? [product.image] : undefined,
             },
-            unit_amount,
+            unit_amount: Math.round(product.price * 100),
           },
           quantity: 1,
         },
