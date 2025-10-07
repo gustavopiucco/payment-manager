@@ -18,7 +18,7 @@ export default function LoginPage() {
     setLoading(true);
 
     try {
-      const res = await fetch("/api/auth/login", {
+      const res = await fetch("/api/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password }),
@@ -27,7 +27,7 @@ export default function LoginPage() {
       const data = await res.json().catch(() => ({}));
 
       if (!res.ok || data?.success === false) {
-        throw new Error(data?.message || `HTTP ${res.status}`);
+        throw new Error(data?.error || `HTTP ${res.status}`);
       }
 
       router.push("/");
