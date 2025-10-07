@@ -3,7 +3,12 @@
 import Link from "next/link";
 import { useState } from "react";
 
-export default function Header() {
+type HeaderProps = {
+  isAuthenticated?: boolean;
+  user?: any;
+};
+
+export default function Header({ isAuthenticated, user }: HeaderProps) {
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (
@@ -14,12 +19,22 @@ export default function Header() {
         </Link>
 
         <nav className="hidden md:flex gap-6">
-          <Link href="/login" className="text-gray-700 hover:text-blue-600">
-            Login
-          </Link>
-          <Link href="/register" className="text-gray-700 hover:text-blue-600">
-            Register
-          </Link>
+          {isAuthenticated ? (
+            <>
+              <Link href="/logout" className="text-gray-700 hover:text-blue-600">
+                Logout
+              </Link>
+            </>
+          ) : (
+            <>
+              <Link href="/login" className="text-gray-700 hover:text-blue-600">
+                Login
+              </Link>
+              <Link href="/register" className="text-gray-700 hover:text-blue-600">
+                Register
+              </Link>
+            </>
+          )}
         </nav>
 
         <button
@@ -54,20 +69,41 @@ export default function Header() {
 
       {menuOpen && (
         <nav className="md:hidden bg-white border-t border-gray-200">
-          <Link
-            href="/login"
-            className="block px-4 py-2 text-gray-700 hover:bg-gray-100"
-            onClick={() => setMenuOpen(false)}
-          >
-            Login
-          </Link>
-          <Link
-            href="/register"
-            className="block px-4 py-2 text-gray-700 hover:bg-gray-100"
-            onClick={() => setMenuOpen(false)}
-          >
-            Register
-          </Link>
+          {isAuthenticated ? (
+            <>
+              <Link
+                href="/order/success"
+                className="block px-4 py-2 text-gray-700 hover:bg-gray-100"
+                onClick={() => setMenuOpen(false)}
+              >
+                Orders
+              </Link>
+              <Link
+                href="/"
+                className="block px-4 py-2 text-gray-700 hover:bg-gray-100"
+                onClick={() => setMenuOpen(false)}
+              >
+                Logout
+              </Link>
+            </>
+          ) : (
+            <>
+              <Link
+                href="/login"
+                className="block px-4 py-2 text-gray-700 hover:bg-gray-100"
+                onClick={() => setMenuOpen(false)}
+              >
+                Login
+              </Link>
+              <Link
+                href="/register"
+                className="block px-4 py-2 text-gray-700 hover:bg-gray-100"
+                onClick={() => setMenuOpen(false)}
+              >
+                Register
+              </Link>
+            </>
+          )}
         </nav>
       )}
     </header>

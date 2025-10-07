@@ -62,7 +62,7 @@ function CheckoutContent() {
     setError(null);
 
     try {
-      const res = await fetch("/api/stripe", {
+      const res = await fetch("/api/checkout", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
