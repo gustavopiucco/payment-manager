@@ -1,12 +1,13 @@
 import { NextResponse } from "next/server";
 import client from "../../../../lib/mongodb";
+import { Product } from "@/app/types/product";
 
 export async function GET() {
   try {
     const db = await client.connect();
     const products = await db
       .db("payment-manager")
-      .collection("products")
+      .collection<Product>("products")
       .find()
       .toArray();
 

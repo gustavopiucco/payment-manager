@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import client from "../../../../../lib/mongodb";
+import { Product } from "@/app/types/product";
 
 export async function GET(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   try {
@@ -7,7 +8,7 @@ export async function GET(req: NextRequest, { params }: { params: Promise<{ id: 
     const db = await client.connect();
     const product = await db
       .db("payment-manager")
-      .collection("products")
+      .collection<Product>("products")
       .findOne({ id: Number(id) });
 
     if (!product) {
