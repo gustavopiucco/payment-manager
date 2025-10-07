@@ -27,14 +27,14 @@ export default async function RootLayout({ children,
 }>) {
   const cookieStore = await cookies();
   const token = cookieStore.get("token")?.value;
-  let user: any = null;
+  let user = null;
 
   if (token) {
     try {
       const secret = process.env.JWT_SECRET;
       // verify will throw error if invalid
       user = jwt.verify(token, secret!);
-    } catch (err) {
+    } catch {
       // invalid token -> unauthenticated
       user = null;
     }
@@ -45,7 +45,7 @@ export default async function RootLayout({ children,
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <Header isAuthenticated={!!user} user={user} />
+        <Header isAuthenticated={!!user} />
         {children}
       </body>
     </html>

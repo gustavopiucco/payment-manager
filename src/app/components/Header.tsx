@@ -5,10 +5,9 @@ import { useState } from "react";
 
 type HeaderProps = {
   isAuthenticated?: boolean;
-  user?: any;
 };
 
-export default function Header({ isAuthenticated, user }: HeaderProps) {
+export default function Header({ isAuthenticated }: HeaderProps) {
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (
