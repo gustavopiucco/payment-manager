@@ -70,6 +70,12 @@ function CheckoutContent() {
         body: JSON.stringify({ id: product._id.toString() }),
       });
 
+      if (res.status === 401) {
+        // Unauthorized, redirect to login
+        router.push("/login");
+        return;
+      }
+
       if (!res.ok) {
         throw new Error("Failed to create order");
       }
@@ -85,8 +91,10 @@ function CheckoutContent() {
     }
     catch (err) {
       if (err instanceof Error) {
+        setLoading(false);
         setError(err.message);
       } else {
+        setLoading(false);
         setError("Failed to create order");
       }
     }

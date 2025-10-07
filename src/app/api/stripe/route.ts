@@ -8,6 +8,11 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, { apiVersion: "2025-09
 
 export async function POST(req: NextRequest) {
   try {
+    const token = req.cookies.get('token')?.value;
+    if (!token) {
+      return NextResponse.json({ error: 'Unauthorized', redirect: '/login' }, { status: 401 });
+    }
+
     const { id } = (await req.json()) as { id: string };
 
     const db = await client.connect();
