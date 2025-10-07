@@ -36,5 +36,20 @@ export async function POST(request: Request) {
     { expiresIn: '7d' }
   );
 
-  return NextResponse.json({ token, user: { id: user._id.toString(), name: user.name, email: user.email } }, { status: 200 });
+  // Create response and set JWT as a secure, HTTP-only cookie
+  const response = NextResponse.json(
+    { token, user: { id: user._id.toString(), name: user.name, email: user.email } },
+    { status: 200 }
+  );
+
+  const secure = process.env.NODE_ENV === 'production';
+  response.cookies.set('token', token, {
+    httpOnly: true,
+    secure,
+    sameSite: 'lax',
+    path: '/',
+    maxAge: 60 * 60 * 24 * 7, //in seconds (7 days)
+  });
+
+  return response;
 }
