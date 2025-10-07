@@ -67,7 +67,7 @@ function CheckoutContent() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ id: product._id.toString() }),
+        body: JSON.stringify({ productId: product._id.toString() }),
       });
 
       if (res.status === 401) {
