@@ -69,7 +69,7 @@ export default function HomePage() {
             {products.map((product) => (
               // Each product card
               <div
-                key={product.id}
+                key={product._id.toString()}
                 className="bg-white rounded-2xl shadow p-4 flex flex-col items-center hover:shadow-lg transition"
               >
                 {/* Product image */}
@@ -93,7 +93,7 @@ export default function HomePage() {
 
                 {/* Link to checkout with product id */}
                 <Link
-                  href={`/checkout?id=${product.id}`}
+                  href={`/checkout?id=${product._id.toString()}`}
                   className="mt-4 inline-block px-4 py-2 bg-blue-600 text-white rounded-xl hover:bg-blue-700 transition"
                 >
                   Buy

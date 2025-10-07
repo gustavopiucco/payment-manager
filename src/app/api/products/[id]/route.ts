@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import client from "../../../../../lib/mongodb";
 import { Product } from "@/app/types/product";
+import { ObjectId } from "mongodb";
 
 export async function GET(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   try {
@@ -9,7 +10,7 @@ export async function GET(req: NextRequest, { params }: { params: Promise<{ id: 
     const product = await db
       .db("payment-manager")
       .collection<Product>("products")
-      .findOne({ id: Number(id) });
+      .findOne({ _id: new ObjectId(id) });
 
     if (!product) {
       return NextResponse.json({ error: "Product not found" }, { status: 404 });

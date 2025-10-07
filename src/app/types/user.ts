@@ -1,6 +1,10 @@
+import { ObjectId } from "mongodb";
+
 export type User = {
-  id: number;
+  _id: ObjectId;
   name: string;
   email: string;
   password: string;
 };
+
+export type NewUser = Omit<User, "_id">;

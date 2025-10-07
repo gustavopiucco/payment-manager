@@ -67,7 +67,7 @@ function CheckoutContent() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ id: product.id }),
+        body: JSON.stringify({ id: product._id.toString() }),
       });
 
       if (!res.ok) {

@@ -2,18 +2,19 @@ import { NextRequest, NextResponse } from "next/server";
 import Stripe from "stripe";
 import client from "../../../../lib/mongodb";
 import { Product } from "@/app/types/product";
+import { ObjectId } from "mongodb";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, { apiVersion: "2025-09-30.clover" });
 
 export async function POST(req: NextRequest) {
   try {
-    const { id } = await req.json();
+    const { id } = (await req.json()) as { id: string };
 
     const db = await client.connect();
     const product = await db
       .db("payment-manager")
       .collection<Product>("products")
-      .findOne({ id: id });
+      .findOne({ _id: new ObjectId(id) });
 
     if (!product) {
       return NextResponse.json({ error: "Product not found" }, { status: 404 });

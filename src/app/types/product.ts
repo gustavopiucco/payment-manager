@@ -1,6 +1,10 @@
+import { ObjectId } from "mongodb";
+
 export type Product = {
-  id: number;
+  _id: ObjectId;
   name: string;
   price: number;
   image: string;
 };
+
+export type NewProduct = Omit<Product, "_id">;
