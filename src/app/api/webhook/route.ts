@@ -1,10 +1,15 @@
+import client from "@/lib/mongodb";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req: NextRequest) {
   try {
     const data = await req.json();
 
-    console.log(data);
+    const db = await client.connect();
+    await db
+      .db("payment-manager")
+      .collection("webhooks")
+      .insertOne(data);
 
     return NextResponse.json({}, { status: 200 });
   } catch (err) {

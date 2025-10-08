@@ -32,10 +32,10 @@ export default async function RootLayout({ children,
   if (token) {
     try {
       const secret = process.env.JWT_SECRET;
-      // verify will throw error if invalid
+      //TODO: use jose lib instead of jsonwebtoken for not block runtime event loop, and be able to use in the Vercel Edge Runtime
       user = jwt.verify(token, secret!);
     } catch {
-      // invalid token -> unauthenticated
+      // invalid or expired token
       user = null;
     }
   }

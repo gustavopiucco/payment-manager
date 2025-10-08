@@ -30,6 +30,7 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: 'Server error' }, { status: 500 });
   }
 
+  //TODO: use jose lib instead of jsonwebtoken for not block runtime event loop, and be able to use in the Vercel Edge Runtime
   const token = jwt.sign(
     { sub: user._id.toString(), email: user.email },
     JWT_SECRET,
