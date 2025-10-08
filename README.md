@@ -2,6 +2,8 @@ Test Project for SETUP
 
 Preview: https://payment-manager-five.vercel.app
 
+Credit Card Fake: https://docs.stripe.com/terminal/references/testing#standard-test-cards
+
 💳 **Payment Manager**
 🧩 **Introduction**
 
