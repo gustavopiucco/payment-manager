@@ -5,7 +5,7 @@ export type Product = {
   name: string;
   price: number;
   image: string;
-  userId?: ObjectId | string;
+  userId?: ObjectId | string | null;
   purchasedAt?: Date;
 };
 
