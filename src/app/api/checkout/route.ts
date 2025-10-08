@@ -52,7 +52,7 @@ export async function POST(req: NextRequest) {
     //   automatic_tax: { enabled: false },
     // });
 
-    return NextResponse.json({ url: null }, { status: 201 });
+    return NextResponse.json({ url: "https://www.google.com" }, { status: 201 });
   } catch (err) {
     console.error(err);
     return NextResponse.json({ error: "Checkout failed" }, { status: 500 });
