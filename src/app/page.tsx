@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { Product } from "./types/product";
+import { Product } from "../types/product";
 
 export default function HomePage() {
   // State that keeps the products list

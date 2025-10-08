@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
-import client from '../../../../lib/mongodb';
+import client from '../../../lib/mongodb';
 import jwt from 'jsonwebtoken';
-import { User } from '@/app/types/user';
+import { User } from '@/types/user';
 
 export async function POST(request: Request) {
   const { email, password } = await request.json();

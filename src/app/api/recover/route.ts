@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import client from '../../../../lib/mongodb';
+import client from '../../../lib/mongodb';
 import crypto from 'crypto';
 import { Resend } from 'resend';
 

@@ -3,7 +3,7 @@
 import React, { Suspense, useEffect, useState } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import Image from "next/image";
-import { Product } from "../types/product";
+import { Product } from "../../types/product";
 
 function CheckoutContent() {
   const params = useSearchParams();
