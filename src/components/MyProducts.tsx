@@ -1,7 +1,6 @@
 "use client";
 
 import Image from "next/image";
-import Link from "next/link";
 import { useEffect, useState } from "react";
 import { Product } from "../types/product";
 
@@ -40,28 +39,32 @@ export default function MyProducts() {
             My Products
           </h1>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
-            {products.map((product) => (
-              <div
-                key={product._id.toString()}
-                className="bg-white rounded-2xl shadow p-4 flex flex-col items-center hover:shadow-lg transition"
-              >
-                <div className="w-full h-48 relative rounded-md overflow-hidden">
-                  <Image
-                    src={product.image}
-                    alt={product.name}
-                    fill
-                    sizes="(max-width: 768px) 100vw, 300px"
-                    style={{ objectFit: "contain" }}
-                    className="object-contain"
-                    unoptimized
-                  />
-                </div>
+          {products.length === 0 ? (
+            <p className="text-center text-gray-600">You don't have any products yet. Buy something in the list below.</p>
+          ) : (
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
+              {products.map((product) => (
+                <div
+                  key={product._id.toString()}
+                  className="bg-white rounded-2xl shadow p-4 flex flex-col items-center hover:shadow-lg transition"
+                >
+                  <div className="w-full h-48 relative rounded-md overflow-hidden">
+                    <Image
+                      src={product.image}
+                      alt={product.name}
+                      fill
+                      sizes="(max-width: 768px) 100vw, 300px"
+                      style={{ objectFit: "contain" }}
+                      className="object-contain"
+                      unoptimized
+                    />
+                  </div>
 
-                <h2 className="mt-4 text-lg font-semibold text-gray-800">{product.name}</h2>
-              </div>
-            ))}
-          </div>
+                  <h2 className="mt-4 text-lg font-semibold text-gray-800">{product.name}</h2>
+                </div>
+              ))}
+            </div>
+          )}
         </>
       )}
     </>
