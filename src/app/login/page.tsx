@@ -1,11 +1,9 @@
 "use client";
 
 import { useState } from "react";
-import { useRouter } from "next/navigation";
 import Link from "next/link";
 
 export default function LoginPage() {
-  const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
@@ -29,8 +27,7 @@ export default function LoginPage() {
         throw new Error(data?.error || `HTTP ${res.status}`);
       }
 
-      router.push("/");
-      router.refresh();
+      window.location.href = "/";
     } catch (err) {
       setError(err instanceof Error ? err.message : "Login failed");
     } finally {
@@ -71,7 +68,7 @@ export default function LoginPage() {
           </label>
 
           {loading ? (
-            <p className="text-center text-gray-900">Signing in…</p>
+            <p className="text-center text-gray-900">Loading…</p>
           ) : error ? (
             <p className="text-center text-red-600">{error}</p>
           ) : null}

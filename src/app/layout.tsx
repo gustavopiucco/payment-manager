@@ -4,6 +4,7 @@ import "./globals.css";
 import { cookies } from "next/headers";
 import jwt from "jsonwebtoken";
 import Header from "@/components/Header";
+import { AuthProvider } from "@/context/AuthContext";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -45,8 +46,10 @@ export default async function RootLayout({ children,
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <Header isAuthenticated={!!user} />
-        {children}
+        <AuthProvider>
+          <Header />
+          {children}
+        </AuthProvider>
       </body>
     </html>
   );

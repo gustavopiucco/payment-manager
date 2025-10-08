@@ -32,6 +32,7 @@ export async function POST(req: NextRequest) {
       mode: 'payment',
       payment_method_types: ['card'],
       client_reference_id: authUser.sub,
+      // line_items = cart items, so here just one product, if there is a real cart, there will be multiple
       line_items: [
         {
           price_data: {
@@ -45,6 +46,10 @@ export async function POST(req: NextRequest) {
           quantity: 1,
         },
       ],
+      metadata: {
+        productId: product._id.toString(),
+        userId: authUser.sub,
+      },
 
       success_url: `${process.env.NEXT_PUBLIC_APP_URL}/order/success`,
       cancel_url: process.env.NEXT_PUBLIC_APP_URL,
