@@ -5,6 +5,8 @@ export type Product = {
   name: string;
   price: number;
   image: string;
+  userId?: string;
+  purchasedAt?: Date;
 };
 
 export type NewProduct = Omit<Product, "_id">;

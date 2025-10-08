@@ -15,7 +15,7 @@ export async function getAuthUser(): Promise<JwtPayload | null> {
     //TODO: use jose lib instead of jsonwebtoken for not block runtime event loop, and be able to use in the Vercel Edge Runtime
     const payload = jwt.verify(token, secret) as JwtPayload;
     return payload;
-  } catch (err) {
+  } catch {
     // invalid or expired token
     return null;
   }
