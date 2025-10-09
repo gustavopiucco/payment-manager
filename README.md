@@ -41,6 +41,9 @@ Successfully update ownership upon confirmed payment.
 ⚙️ **Technologies**
 
 Frontend: React / Next.js / Tailwind
+
 Backend: Node.js / Express / MongoDB / Resend
+
 Payments: Stripe Payment Link API
+
 Authentication: Simple Email & Password with JWT
