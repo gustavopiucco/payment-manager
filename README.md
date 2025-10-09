@@ -1,8 +1,24 @@
 Test Project for SETUP
 
 Preview: https://payment-manager-five.vercel.app
-
 Credit Card Fake: https://docs.stripe.com/terminal/references/testing#standard-test-cards
+
+## 🚀 Run locally
+
+2. Install dependencies
+  ```bash
+  npm install
+  ```
+
+3. Start dev server:
+  ```bash
+  npm run dev
+  ```
+
+The project will be available at `http://localhost:3000`.
+
+Make sure to set up the environment variables in `.env.local` using the `.env.local.example` as a reference.
+
 
 💳 **Payment Manager**
 🧩 **Introduction**
