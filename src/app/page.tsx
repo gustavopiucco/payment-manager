@@ -3,6 +3,7 @@
 import AvailableProducts from "@/components/AvailableProducts";
 import MyProducts from "@/components/MyProducts";
 import { useAuth } from "@/context/AuthContext";
+import Link from "next/link";
 
 export default function HomePage() {
   const { user } = useAuth();
@@ -17,6 +18,12 @@ export default function HomePage() {
           <p className="text-gray-800">
             {user?.email} <br />
           </p>
+          <Link
+            href="/change-password"
+            className="mt-2 inline-block px-2 py-1 text-sm bg-blue-600 text-white rounded hover:bg-blue-700 transition"
+          >
+            Change Password
+          </Link>
         </>
       )}
 
