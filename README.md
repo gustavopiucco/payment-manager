@@ -21,7 +21,7 @@ Make sure to set up the environment variables in `.env.local` using the `.env.lo
 
 
 
-## 💳 Payment Manager**  
+## 💳 Payment Manager
 
 
 🧩 **Introduction**
