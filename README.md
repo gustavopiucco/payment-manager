@@ -21,7 +21,9 @@ Make sure to set up the environment variables in `.env.local` using the `.env.lo
 
 
 
-💳 **Payment Manager**
+## 💳 Payment Manager**  
+
+
 🧩 **Introduction**
 
 The aim of this project is to create a payment manager, letting the user:  
